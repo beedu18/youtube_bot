@@ -13,16 +13,24 @@ def initialize():
 
     driver = webdriver.Chrome("./chromedriver.exe", options=options)
     driver.get(config.link)
+    time.sleep(config.long_delay) # to ensure page load
     return driver
 
 def click_settings(driver):
     settings = driver.find_element(By.XPATH, config.settings_btn)
     settings.click()
+    time.sleep(config.short_delay)
     webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
+
+def change_resolution(driver):
+    pass
+
+def change_speed(driver):
+    pass
 
 def seek_video(driver):
     num_times = random.randint(config.min_, config.max_)
-    print(f'Video seeking for {num_times} taps')
+    print(f'Video seeking for {int((num_times * 5)/60)} minutes and {(num_times * 5)%60} seconds')
     while (num_times > 0):
         # print(num_times)
         webdriver.ActionChains(driver).key_down(Keys.ARROW_RIGHT).perform()
@@ -30,15 +38,17 @@ def seek_video(driver):
         num_times -= 1
 
 def main():
-    driver = initialize()
-    time.sleep(config.long_delay) # to ensure page load
-    
-    click_settings(driver)
-    time.sleep(config.short_delay)
+    while True:
+        driver = initialize()
 
-    seek_video(driver)
-    time.sleep(config.long_delay)
-    
-    driver.quit()
+        click_settings(driver)
+
+        seek_video(driver)
+
+        # watch time
+        print(f'Video will play for {int((config.watch_time)/60)} minutes and {(config.watch_time)%60} seconds')
+        time.sleep(watch_time)
+
+        driver.quit()
 
 main()
