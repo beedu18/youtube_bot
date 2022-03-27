@@ -25,11 +25,13 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
+        <li><a href="#clone-repository">Selenium</a></li>
         <li><a href="#selenium">Selenium</a></li>
         <li><a href="#chromedriver">ChromeDriver</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#abilities">Abilities</a></li>
     <li><a href="#video-tutorial">Video Tutorial</a></li>
   </ol>
 </details>
@@ -99,6 +101,16 @@ Run the `main.py` file
   ```sh
   python main.py
   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- FEATURES -->
+## Abilities
+
+1. Seek through video
+2. Change playback resolution
+3. Change playback speed
+4. Runs in a loop
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

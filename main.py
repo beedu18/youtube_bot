@@ -1,10 +1,16 @@
 import time
 import config
 import random
+from datetime import datetime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By 
 from selenium.webdriver.common.keys import Keys
+
+video_has_chapters = False # whether the video has chapters
+
+def current_time(text):
+    print(f'{text} [{datetime.now().strftime("%H:%M:%S")}]')
 
 def time_format(string, time):
     print(f'{string}: {int((time)/60)} minutes and {(time)%60} seconds')
@@ -17,12 +23,21 @@ def initialize():
 
     driver = webdriver.Chrome(config.driver_file, options=options)
     driver.get(config.link)
+    
+    current_time('Bot Started')
+    
     time.sleep(config.long_delay) # to ensure page load
     return driver
 
 # clicks the settings button on playback window (to get the context menu)
 def click_settings(driver):
-    settings = driver.find_element(By.XPATH, config.settings_btn)
+    global video_has_chapters
+    try:
+        settings = driver.find_element(By.XPATH, config.settings_btn)
+    except:
+        settings = driver.find_element(By.XPATH, config.settings_btn_2)
+        video_has_chapters = True
+    
     settings.click()
     time.sleep(config.vs_delay)
     # webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
@@ -38,6 +53,12 @@ def change_resolution(driver):
     webdriver.ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
     time.sleep(config.vs_delay)
     
+    # additional keypress if chapters are present
+    global video_has_chapters
+    if video_has_chapters:
+        webdriver.ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+        time.sleep(config.vs_delay) 
+
     webdriver.ActionChains(driver).key_down(Keys.ENTER).perform()
     time.sleep(config.vs_delay)
     
@@ -50,9 +71,17 @@ def change_resolution(driver):
     webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
     time.sleep(config.vs_delay)
 
+    print('Changed Resolution to 144p')
+
 # changes video speed to 2x
 def change_speed(driver):
     click_settings(driver)
+
+    # additional keypress
+    global video_has_chapters
+    if video_has_chapters:
+        webdriver.ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+        time.sleep(config.vs_delay)
 
     webdriver.ActionChains(driver).key_down(Keys.ENTER).perform()
     time.sleep(config.vs_delay)
@@ -74,6 +103,8 @@ def change_speed(driver):
 
     webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
     time.sleep(config.vs_delay)
+
+    print('Changed Speed to 2x')
 
 # seeks further into the video
 def seek_video(driver):
@@ -87,6 +118,7 @@ def seek_video(driver):
 
 # main loop
 def main():
+    watched = 1
     while True:
         driver = initialize()
 
@@ -96,14 +128,21 @@ def main():
 
         change_speed(driver)
 
-        time_format('Playback Time', config.watch_time) # displays info in console
-        time.sleep(config.watch_time)
+        # time_format('Playback Time', config.watch_time) # displays info in console
+        # time.sleep(config.watch_time)
 
         # or use this for randomized watch time
-        # watch_time = random.randint(config.min_wt, config.max_wt)
-        # time_format('Playback Time', watch_time)
-        # time.sleep(watch_time)
+        watch_time = random.randint(config.min_wt, config.max_wt)
+        time_format('Playback Time', watch_time)
+        time.sleep(watch_time)
         
+        print(f'Watched {watched} times')
+
+        watched += 1
+
         driver.quit()
+
+        current_time('Loop Ended')
+        print('---')        
 
 main()
