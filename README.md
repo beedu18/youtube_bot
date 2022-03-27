@@ -65,7 +65,7 @@ Lets get started
 
 Get selenium using pip.
 ```sh
-pip install requirements.txt -r
+pip install -r requirements.txt
 ```
 
 ### ChromeDriver
