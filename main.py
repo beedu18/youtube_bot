@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 def time_format(string, time):
     print(f'{string}: {int((time)/60)} minutes and {(time)%60} seconds')
 
+# initializes and returns web-driver
 def initialize():
     options = webdriver.ChromeOptions()
     options.add_argument("--incognito")
@@ -19,12 +20,14 @@ def initialize():
     time.sleep(config.long_delay) # to ensure page load
     return driver
 
+# clicks the settings button on playback window (to get the context menu)
 def click_settings(driver):
     settings = driver.find_element(By.XPATH, config.settings_btn)
     settings.click()
     time.sleep(config.vs_delay)
     # webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
 
+# changes video resolution to 144p
 def change_resolution(driver):
     # DN2 ENT UP1 ENT ESC
     click_settings(driver)
@@ -47,6 +50,7 @@ def change_resolution(driver):
     webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
     time.sleep(config.vs_delay)
 
+# changes video speed to 2x
 def change_speed(driver):
     click_settings(driver)
 
@@ -71,6 +75,7 @@ def change_speed(driver):
     webdriver.ActionChains(driver).key_down(Keys.ESCAPE).perform()
     time.sleep(config.vs_delay)
 
+# seeks further into the video
 def seek_video(driver):
     num_times = random.randint(config.min_, config.max_)
     time_format('Seeking', num_times * 5)
@@ -80,11 +85,10 @@ def seek_video(driver):
         time.sleep(config.vs_delay)
         num_times -= 1
 
+# main loop
 def main():
     while True:
         driver = initialize()
-
-        # click_settings(driver)
 
         seek_video(driver)
 
