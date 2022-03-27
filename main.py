@@ -15,7 +15,7 @@ def initialize():
     options.add_argument("--incognito")
     options.add_argument("start-maximized")
 
-    driver = webdriver.Chrome("./chromedriver.exe", options=options)
+    driver = webdriver.Chrome(config.driver_file, options=options)
     driver.get(config.link)
     time.sleep(config.long_delay) # to ensure page load
     return driver
@@ -96,10 +96,14 @@ def main():
 
         change_speed(driver)
 
-        # watch time can be made dynamic using randint
-        time_format('Playback Time', config.watch_time)
+        time_format('Playback Time', config.watch_time) # displays info in console
         time.sleep(config.watch_time)
 
+        # or use this for randomized watch time
+        # watch_time = random.randint(config.min_wt, config.max_wt)
+        # time_format('Playback Time', watch_time)
+        # time.sleep(watch_time)
+        
         driver.quit()
 
 main()
