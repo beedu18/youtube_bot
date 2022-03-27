@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <img src="assets/youtube.webp" alt="Logo" height="80">
+    <img src="assets/youtube.png" alt="Logo" height="80">
 
   <h3 align="center">Youtube Bot</h3>
 
