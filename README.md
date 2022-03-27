@@ -61,6 +61,18 @@ This project uses the Selenium Library and ChromeDriver to automate watching you
 
 Lets get started
 
+### Clone Repository
+
+Clone this repository using
+```sh
+git clone https://github.com/beedu18/youtube_bot.git
+```
+
+Go to project root
+```sh
+cd youtube_bot
+```
+
 ### Selenium
 
 Get selenium using pip.
