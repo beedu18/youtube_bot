@@ -8,7 +8,7 @@
   <h3 align="center">Youtube Bot</h3>
 
   <p align="center">
-    <a href="https://github.com/beedu18/youtube-bot"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/beedu18/youtube_bot"><strong>Explore the docs »</strong></a>
   </p>
 </div>
 
